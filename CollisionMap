@@ -1,0 +1,10 @@
+import folium
+import pandas as pd
+map = folium.Map(location=[45.508888, -73.561668], tiles="Stamen Terrain")
+df = pd.read_csv("Collisions.csv")
+Collisions = folium.FeatureGroup("Collisions")
+df = df.reset_index() 
+for index, row in df.iterrows():
+    Collisions.add_child(folium.Circle(location = [row['Long'],row['Lat']], popup =row['Street'], icon=folium.Icon(color='blue')))
+map.add_child(Collisions)
+map.save("BorealisMap.html")
